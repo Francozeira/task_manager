@@ -6,7 +6,9 @@
         @deleteTask="$emit('deleteTask',i)"
       ></Task>
     </template>
-    <p v-else class="noTask">You really have outdone yourself this time! =D</p>
+    <div v-else>
+      <img src="https://i.imgflip.com/1k37ih.jpg" alt="You have really outdone yourself this time! =D">
+    </div>
   </div>
 </template>
 
@@ -38,8 +40,8 @@ export default {
   margin: 10px;
 }
 
-.NoTask {
-  color: #aaa;
-  font-size: 2rem;
+img {
+  border: 10px solid rgba(221, 221, 221, 0.3);
+  border-radius: 10px;
 }
 </style>

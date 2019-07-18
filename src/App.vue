@@ -14,23 +14,30 @@ import TaskProgress from './components/TaskProgress'
 
 export default {
   components: { TaskProgress, NewTask, TaskGrid },
-	
-	computed:{
-		
-	},
 
   data() {
     return {
-      tasks: [
-        { text: 'Buy contact lenses', pending: true },
-        { text: 'Give your jumps', pending: false },
-        { text: 'Pay College tuition because i am an American', pending: true },
-        { text: 'Check on intern contract', pending: true },
-        { text: 'Hit the Gym!', pending: false }
-			]
+      tasks: []
     };
   },
 
+  computed:{
+    progress() {
+      const total = this.tasks.length
+      const done = this.tasks.filter(t => !t.pending).length
+      return Math.round(done / total * 100) || 0
+    }
+  },
+
+  watch: {
+    tasks: {
+      deep: true,
+      handler() {
+        localStorage.setItem('tasks',JSON.stringify(this.tasks))
+      }
+    }
+  },
+  
   methods: {
     addTask(data) {
       const sameName = t => t.text === data;
@@ -48,6 +55,11 @@ export default {
 		pendingChanger(i) {
 			this.tasks[i].pending = !this.tasks[i].pending
 		}
+  },
+
+  created() {
+    const jsonTask = localStorage.getItem('tasks')
+    this.tasks = JSON.parse(jsonTask) || []
   }
 };
 </script>
